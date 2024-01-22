@@ -17,6 +17,7 @@ namespace Il2Cpp
         const Type* GetType() const;
         bool HasAttribute(Class* attr_class) const;
         bool IsLiteral() const;
+        // i kinda forgot about those and tbh im too lazy to do something about it
         void* GetValue(Object* obj) const;
         Object* GetValueObject(Object* obj) const;
         void* GetValueStatic() const;
