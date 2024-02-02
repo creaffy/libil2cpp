@@ -21,15 +21,15 @@ namespace Il2Cpp
         Object* GetValueObject(Object* obj) const;
         void SetValueObject(Object* obj, Object* value);
         template <typename T>
-        T GetValue(Object* obj) const 
+        T GetValue(Object* obj) const
         {
-            static auto _ApiFunction = Resolver::GetExport<void (*)(Object*, const Field *, void*)>("il2cpp_field_get_value");
+            static auto _ApiFunction = Resolver::GetExport<void (*)(Object*, const Field*, void*)>("il2cpp_field_get_value");
             T _Value{};
             _ApiFunction(obj, this, &_Value);
             return _Value;
         }
         template <typename T>
-        T GetValueStatic() const 
+        T GetValueStatic() const
         {
             static auto _ApiFunction = Resolver::GetExport<void (*)(const Field*, void*)>("il2cpp_field_static_get_value");
             T _Value{};
@@ -37,13 +37,13 @@ namespace Il2Cpp
             return _Value;
         }
         template <typename T>
-        void SetValue(Object* obj, T& value) 
+        void SetValue(Object* obj, T& value)
         {
             static auto _ApiFunction = Resolver::GetExport<void (*)(Object*, const Field*, void*)>("il2cpp_field_set_value");
             _ApiFunction(obj, this, &value);
         }
         template <typename T>
-        void SetValueStatic(T& value) 
+        void SetValueStatic(T& value)
         {
             static auto _ApiFunction = Resolver::GetExport<void (*)(const Field*, void*)>("il2cpp_field_static_set_value");
             _ApiFunction(this, &value);
