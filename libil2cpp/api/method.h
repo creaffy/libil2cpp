@@ -11,7 +11,7 @@ namespace Il2Cpp
     {
         const Type* GetReturnType() const;
         Class* GetDeclaringType() const;
-        const std::string GetName() const;
+        std::string_view GetName() const;
         Il2CppReflectionMethod* GetMethodObject() const;
         bool IsGeneric() const;
         bool IsInflated() const;
@@ -22,7 +22,7 @@ namespace Il2Cpp
         bool HasAttribute(Class* attr_class) const;
         uint32_t GetFlags(uint32_t* iflags) const;
         uint32_t GetToken() const;
-        const std::string GetParamName(uint32_t index) const;
+        std::string_view GetParamName(uint32_t index) const;
         static const Method* FromReflection(const Il2CppReflectionMethod* method, Class* refclass);
     };
 }

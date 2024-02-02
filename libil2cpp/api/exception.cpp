@@ -33,14 +33,14 @@ void Exception::NativeStackTrace(uintptr_t** addresses, int* num_frames, char* i
     return _ApiFunction(this, addresses, num_frames, imageUUID);
 }
 
-Exception* Exception::FromNameMsg(const Image* image, const std::string name_space, const std::string name, const std::string msg)
+Exception* Exception::FromNameMsg(const Image* image, std::string_view name_space, std::string_view name, std::string_view msg)
 {
     static auto _ApiFunction = Resolver::GetExport<Exception * (*)(const Image*, const char*, const char*, const char*)>("il2cpp_exception_from_name_msg");
-    return _ApiFunction(image, name_space.c_str(), name.c_str(), msg.c_str());
+    return _ApiFunction(image, name_space.data(), name.data(), msg.data());
 }
 
-Exception* Exception::GetArgumentNullException(const std::string arg)
+Exception* Exception::GetArgumentNullException(std::string_view arg)
 {
     static auto _ApiFunction = Resolver::GetExport<Exception * (*)(const char*)>("il2cpp_get_exception_argument_null");
-    return _ApiFunction(arg.c_str());
+    return _ApiFunction(arg.data());
 }

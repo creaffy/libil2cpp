@@ -9,8 +9,8 @@ namespace Il2Cpp
 
     void SetMemoryCallbacks(Il2CppMemoryCallbacks* callbacks);
     const Image* GetCorlib();
-    void AddInternalCall(const std::string name, Il2CppMethodPointer method);
-    Il2CppMethodPointer ResolveInternalCall(const std::string name);
+    void AddInternalCall(std::string_view name, Il2CppMethodPointer method);
+    Il2CppMethodPointer ResolveInternalCall(std::string_view name);
 
     void* Alloc(size_t size);
     void Free(void* ptr);

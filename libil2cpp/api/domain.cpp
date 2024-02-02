@@ -3,10 +3,10 @@
 
 using namespace Il2Cpp;
 
-const Assembly* Domain::OpenAssembly(const std::string name) const
+const Assembly* Domain::OpenAssembly(std::string_view name) const
 {
     static auto _ApiFunction = Resolver::GetExport<Assembly * (*)(const Domain*, const char*)>("il2cpp_domain_assembly_open");
-    return _ApiFunction(this, name.c_str());
+    return _ApiFunction(this, name.data());
 }
 
 const std::vector<Assembly*> Domain::GetAssemblies() const

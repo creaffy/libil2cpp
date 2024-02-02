@@ -9,10 +9,10 @@ namespace Il2Cpp
 {
     namespace Resolver
     {
-        Class* GetClass(const std::string _Assembly, const std::string _Namespace, const std::string _Class);
-        const Method* GetMethod(const std::string _Assembly, const std::string _Namespace, const std::string _Class, const std::string _Method, int32_t _ArgsCount);
-        const Property* GetProperty(const std::string _Assembly, const std::string _Namespace, const std::string _Class, const std::string _Property);
-        Il2CppMethodPointer GetInternalCall(const std::string _Name);
+        Class* GetClass(std::string_view _Assembly, std::string_view _Namespace, std::string_view _Class);
+        const Method* GetMethod(std::string_view _Assembly, std::string_view _Namespace, std::string_view _Class, std::string_view _Method, int32_t _ArgsCount);
+        const Property* GetProperty(std::string_view _Assembly, std::string_view _Namespace, std::string_view _Class, std::string_view _Property);
+        Il2CppMethodPointer GetInternalCall(std::string_view _Name);
         template <typename T>
         constexpr T GetExport(std::string_view _ExportName)
         {

@@ -140,31 +140,31 @@ const std::vector<Method*> Class::GetMethods() const {
     return _Methods;
 }
 
-const Property* Class::GetPropertyFromName(const std::string name) const
+const Property* Class::GetPropertyFromName(std::string_view name) const
 {
     static auto _ApiFunction = Resolver::GetExport<const Property * (*)(const Class*, const char*)>("il2cpp_class_get_property_from_name");
-    return _ApiFunction(this, name.c_str());
+    return _ApiFunction(this, name.data());
 }
 
-Field* Class::GetFieldFromName(const std::string name) const
+Field* Class::GetFieldFromName(std::string_view name) const
 {
     static auto _ApiFunction = Resolver::GetExport<Field * (*)(const Class*, const char*)>("il2cpp_class_get_field_from_name");
-    return _ApiFunction(this, name.c_str());
+    return _ApiFunction(this, name.data());
 }
 
-const Method* Class::GetMethodFromName(const std::string name, int32_t args_count) const
+const Method* Class::GetMethodFromName(std::string_view name, int32_t args_count) const
 {
     static auto _ApiFunction = Resolver::GetExport<const Method * (*)(const Class*, const char*, int32_t)>("il2cpp_class_get_method_from_name");
-    return _ApiFunction(this, name.c_str(), args_count);
+    return _ApiFunction(this, name.data(), args_count);
 }
 
-const std::string Class::GetName() const
+std::string_view Class::GetName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Class*)>("il2cpp_class_get_name");
     return _ApiFunction(this);
 }
 
-const std::string Class::GetNamespace() const
+std::string_view Class::GetNamespace() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Class*)>("il2cpp_class_get_namespace");
     return _ApiFunction(this);
@@ -236,7 +236,7 @@ const Image* Class::GetImage() const
     return _ApiFunction(this);
 }
 
-const std::string Class::GetAssemblyName() const
+std::string_view Class::GetAssemblyName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Class*)>("il2cpp_class_get_assemblyname");
     return _ApiFunction(this);
@@ -272,10 +272,10 @@ Class* Class::FromIl2CppType(const Type* type)
     return _ApiFunction(type);
 }
 
-Class* Class::FromName(const Image* image, const std::string namespaze, const std::string name)
+Class* Class::FromName(const Image* image, std::string_view namespaze, std::string_view name)
 {
     static auto _ApiFunction = Resolver::GetExport<Class * (*)(const Image*, const char*, const char*)>("il2cpp_class_from_name");
-    return _ApiFunction(image, namespaze.c_str(), name.c_str());
+    return _ApiFunction(image, namespaze.data(), name.data());
 }
 
 Class* Class::FromSystemType(Il2CppReflectionType* type)

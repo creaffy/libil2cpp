@@ -13,16 +13,16 @@ const Il2Cpp::Image* Il2Cpp::GetCorlib()
     return _ApiFunction();
 }
 
-void Il2Cpp::AddInternalCall(const std::string name, Il2CppMethodPointer method)
+void Il2Cpp::AddInternalCall(std::string_view name, Il2CppMethodPointer method)
 {
     static auto _ApiFunction = Resolver::GetExport<void(*)(const char*, Il2CppMethodPointer)>("il2cpp_add_internal_call");
-    _ApiFunction(name.c_str(), method);
+    _ApiFunction(name.data(), method);
 }
 
-Il2CppMethodPointer Il2Cpp::ResolveInternalCall(const std::string name)
+Il2CppMethodPointer Il2Cpp::ResolveInternalCall(std::string_view name)
 {
     static auto _ApiFunction = Resolver::GetExport<Il2CppMethodPointer(*)(const char*)>("il2cpp_resolve_icall");
-    return _ApiFunction(name.c_str());
+    return _ApiFunction(name.data());
 }
 
 void* Il2Cpp::Alloc(size_t size)

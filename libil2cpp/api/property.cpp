@@ -21,7 +21,7 @@ const Method* Property::Setter() const
     return _ApiFunction(this);
 }
 
-const std::string Property::GetName() const
+std::string_view Property::GetName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Property*)>("il2cpp_property_get_name");
     return _ApiFunction(this);

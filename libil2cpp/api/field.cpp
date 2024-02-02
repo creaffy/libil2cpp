@@ -9,7 +9,7 @@ int32_t Field::GetFlags() const
     return _ApiFunction(this);
 }
 
-const std::string Field::GetName() const
+std::string_view Field::GetName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Field*)>("il2cpp_field_get_name");
     return _ApiFunction(this);
@@ -43,4 +43,16 @@ bool Field::IsLiteral() const
 {
     static auto _ApiFunction = Resolver::GetExport<bool(*)(const Field*)>("il2cpp_field_is_literal");
     return _ApiFunction(this);
+}
+
+Object* Field::GetValueObject(Object* obj) const
+{
+    static auto _ApiFunction = Resolver::GetExport<Object*(*)(const Field*, Object* obj)>("il2cpp_field_get_value_object");
+    return _ApiFunction(this, obj);
+}
+
+void Field::SetValueObject(Object* obj, Object* value) 
+{
+    static auto _ApiFunction = Resolver::GetExport<void(*)(Object*, const Field*, Object*)>("il2cpp_field_set_value_object");
+    return _ApiFunction(obj, this, value);
 }

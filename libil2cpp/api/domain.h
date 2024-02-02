@@ -9,7 +9,7 @@ namespace Il2Cpp
 
     struct Domain : public Il2CppDomain
     {
-        const Assembly* OpenAssembly(const std::string name) const;
+        const Assembly* OpenAssembly(std::string_view name) const;
         const std::vector<Assembly*> GetAssemblies() const;
         static Domain* Get();
     };

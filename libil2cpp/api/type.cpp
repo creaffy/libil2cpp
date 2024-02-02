@@ -21,13 +21,13 @@ Class* Type::GetClassOrElementClass() const
     return _ApiFunction(this);
 }
 
-const std::string Type::GetName() const
+std::string_view Type::GetName() const
 {
     static auto _ApiFunction = Resolver::GetExport<char* (*)(const Type*)>("il2cpp_type_get_name");
     return _ApiFunction(this);
 }
 
-const std::string Type::GetAssemblyQualifiedName() const
+std::string_view Type::GetAssemblyQualifiedName() const
 {
     static auto _ApiFunction = Resolver::GetExport<char* (*)(const Type*)>("il2cpp_type_get_assembly_qualified_name");
     return _ApiFunction(this);

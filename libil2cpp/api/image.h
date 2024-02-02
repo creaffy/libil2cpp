@@ -11,8 +11,8 @@ namespace Il2Cpp
     struct Image : public Il2CppImage
     {
         const Assembly* GetAssembly() const;
-        const std::string GetName() const;
-        const std::string GetFileName() const;
+        std::string_view GetName() const;
+        std::string_view GetFileName() const;
         const Method* GetEntryPoint() const;
         size_t GetClassCount() const;
         const Class* GetClass(size_t index) const;

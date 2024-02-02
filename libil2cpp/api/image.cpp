@@ -9,13 +9,13 @@ const Assembly* Image::GetAssembly() const
     return _ApiFunction(this);
 }
 
-const std::string Image::GetName() const
+std::string_view Image::GetName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Image*)>("il2cpp_image_get_name");
     return _ApiFunction(this);
 }
 
-const std::string Image::GetFileName() const
+std::string_view Image::GetFileName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Image*)>("il2cpp_image_get_filename");
     return _ApiFunction(this);

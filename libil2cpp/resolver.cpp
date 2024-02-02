@@ -6,7 +6,7 @@
 
 using namespace Il2Cpp;
 
-Class* Resolver::GetClass(const std::string _AssemblyName, const std::string _NamespaceName, const std::string _ClassName)
+Class* Resolver::GetClass(std::string_view _AssemblyName, std::string_view _NamespaceName, std::string_view _ClassName)
 {
     static Domain* _Domain = Domain::Get();
     if (!_Domain)
@@ -20,7 +20,7 @@ Class* Resolver::GetClass(const std::string _AssemblyName, const std::string _Na
     return Class::FromName(_Image, _NamespaceName, _ClassName);
 }
 
-const Method* Resolver::GetMethod(const std::string _AssemblyName, const std::string _NamespaceName, const std::string _ClassName, const std::string _MethodName, int32_t _ArgsCount)
+const Method* Resolver::GetMethod(std::string_view _AssemblyName, std::string_view _NamespaceName, std::string_view _ClassName, std::string_view _MethodName, int32_t _ArgsCount)
 {
     Class* _Class = GetClass(_AssemblyName, _NamespaceName, _ClassName);
     if (!_Class)
@@ -28,7 +28,7 @@ const Method* Resolver::GetMethod(const std::string _AssemblyName, const std::st
     return _Class->GetMethodFromName(_MethodName, _ArgsCount);
 }
 
-const Property* Resolver::GetProperty(const std::string _AssemblyName, const std::string _NamespaceName, const std::string _ClassName, const std::string _PropertyName)
+const Property* Resolver::GetProperty(std::string_view _AssemblyName, std::string_view _NamespaceName, std::string_view _ClassName, std::string_view _PropertyName)
 {
     Class* _Class = GetClass(_AssemblyName, _NamespaceName, _ClassName);
     if (!_Class)
@@ -36,7 +36,7 @@ const Property* Resolver::GetProperty(const std::string _AssemblyName, const std
     return _Class->GetPropertyFromName(_PropertyName);
 }
 
-Il2CppMethodPointer Resolver::GetInternalCall(const std::string _Name)
+Il2CppMethodPointer Resolver::GetInternalCall(std::string_view _Name)
 {
     return ResolveInternalCall(_Name);
 }

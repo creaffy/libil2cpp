@@ -11,9 +11,9 @@ namespace Il2Cpp
     {
         Object* GetTypeObject() const;
         Il2CppTypeEnum GetType() const;
-        const std::string GetName() const;
+        std::string_view GetName() const;
         Class* GetClassOrElementClass() const;
-        const std::string GetAssemblyQualifiedName() const;
+        std::string_view GetAssemblyQualifiedName() const;
         bool IsByref() const;
         uint32_t GetAttrs() const;
         bool Equals(const Type* other) const;

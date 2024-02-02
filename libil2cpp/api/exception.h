@@ -13,7 +13,7 @@ namespace Il2Cpp
         void FormatStackTrace(char* output, int output_size) const;
         void UnhandledException();
         void NativeStackTrace(uintptr_t** addresses, int* num_frames, char* imageUUID) const;
-        static Exception* FromNameMsg(const Image* image, const std::string name_space, const std::string name, const std::string msg);
-        static Exception* GetArgumentNullException(const std::string arg);
+        static Exception* FromNameMsg(const Image* image, std::string_view name_space, std::string_view name, std::string_view msg);
+        static Exception* GetArgumentNullException(std::string_view arg);
     };
 }

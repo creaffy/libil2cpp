@@ -15,7 +15,7 @@ Class* Method::GetDeclaringType() const
     return _ApiFunction(this);
 }
 
-const std::string Method::GetName() const
+std::string_view Method::GetName() const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Method*)>("il2cpp_method_get_name");
     return _ApiFunction(this);
@@ -81,7 +81,7 @@ uint32_t Method::GetToken() const
     return _ApiFunction(this);
 }
 
-const std::string Method::GetParamName(uint32_t index) const
+std::string_view Method::GetParamName(uint32_t index) const
 {
     static auto _ApiFunction = Resolver::GetExport<const char* (*)(const Method*, uint32_t)>("il2cpp_method_get_param_name");
     return _ApiFunction(this, index);

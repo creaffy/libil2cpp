@@ -12,7 +12,7 @@ namespace Il2Cpp
         uint32_t GetFlags() const;
         const Method* Getter() const;
         const Method* Setter() const;
-        const std::string GetName() const;
+        std::string_view GetName() const;
         Class* GetParent() const;
     };
 }

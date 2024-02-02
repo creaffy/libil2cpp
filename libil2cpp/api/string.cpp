@@ -9,27 +9,27 @@ int32_t String::GetLength() const
     return _ApiFunction(this);
 }
 
-std::string String::GetString() const
+std::string_view String::GetString() const
 {
-    std::wstring _Wstr = GetWString();
+    std::wstring_view _Wstr = GetWString();
     return std::string(_Wstr.begin(), _Wstr.end());
 }
 
-std::wstring String::GetWString() const
+std::wstring_view String::GetWString() const
 {
-    return std::wstring(reinterpret_cast<const wchar_t*>(chars), length);
+    return std::wstring_view(reinterpret_cast<const wchar_t*>(chars), length);
 }
 
-String* String::New(const std::string str)
+String* String::New(std::string_view str)
 {
     static auto _ApiFunction = Resolver::GetExport<String * (*)(const char*)>("il2cpp_string_new");
-    return _ApiFunction(str.c_str());
+    return _ApiFunction(str.data());
 }
 
-String* String::NewWrapper(const std::string str)
+String* String::NewWrapper(std::string_view str)
 {
     static auto _ApiFunction = Resolver::GetExport<String * (*)(const char*)>("il2cpp_string_new_wrapper");
-    return _ApiFunction(str.c_str());
+    return _ApiFunction(str.data());
 }
 
 String* String::NewLen(const char* str, uint32_t length)
