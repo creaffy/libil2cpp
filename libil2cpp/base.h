@@ -2,6 +2,21 @@
 #include <cstdint>
 #include <windows.h>
 
+namespace Il2Cpp {
+    typedef struct Assembly Assembly;
+    typedef struct Class Class;
+    typedef struct Domain Domain;
+    typedef struct Exception Exception;
+    typedef struct Field Field;
+    typedef struct Image Image;
+    typedef struct Method Method;
+    typedef struct Object Object;
+    typedef struct Property Property;
+    typedef struct String String;
+    typedef struct Thread Thread;
+    typedef struct Type Type;
+}
+
 typedef struct Il2CppClass Il2CppClass;
 typedef struct Il2CppType Il2CppType;
 typedef struct EventInfo EventInfo;
@@ -90,7 +105,7 @@ typedef enum
 } Il2CppRuntimeUnhandledExceptionPolicy;
 typedef struct Il2CppStackFrameInfo
 {
-    const MethodInfo* method;
+    const Il2Cpp::Method* method;
     uintptr_t raw_ip;
     int sourceCodeLineNumber;
     int ilOffset;
@@ -125,12 +140,12 @@ typedef struct
 } Il2CppDebuggerTransport;
 typedef uint16_t Il2CppChar;
 typedef char Il2CppNativeChar;
-typedef void (*il2cpp_register_object_callback)(Il2CppObject** arr, int size, void* userdata);
+typedef void (*il2cpp_register_object_callback)(Il2Cpp::Object** arr, int size, void* userdata);
 typedef void* (*il2cpp_liveness_reallocate_callback)(void* ptr, size_t size, void* userdata);
 typedef void (*Il2CppFrameWalkFunc) (const Il2CppStackFrameInfo* info, void* user_data);
 typedef void (*Il2CppProfileFunc) (Il2CppProfiler* prof);
-typedef void (*Il2CppProfileMethodFunc) (Il2CppProfiler* prof, const MethodInfo* method);
-typedef void (*Il2CppProfileAllocFunc) (Il2CppProfiler* prof, Il2CppObject* obj, Il2CppClass* klass);
+typedef void (*Il2CppProfileMethodFunc) (Il2CppProfiler* prof, const Il2Cpp::Method* method);
+typedef void (*Il2CppProfileAllocFunc) (Il2CppProfiler* prof, Il2Cpp::Object* obj, Il2Cpp::Class* klass);
 typedef void (*Il2CppProfileGCFunc) (Il2CppProfiler* prof, Il2CppGCEvent event, int generation);
 typedef void (*Il2CppProfileGCResizeFunc) (Il2CppProfiler* prof, int64_t new_size);
 typedef void (*Il2CppProfileFileIOFunc) (Il2CppProfiler* prof, Il2CppProfileFileIOKind kind, int count);
@@ -658,7 +673,7 @@ typedef struct MethodInfo MethodInfo;
 typedef struct Il2CppType Il2CppType;
 typedef struct Il2CppArrayType
 {
-    const Il2CppType* etype;
+    const Il2Cpp::Type* etype;
     uint8_t rank;
     uint8_t numsizes;
     uint8_t numlobounds;
@@ -668,7 +683,7 @@ typedef struct Il2CppArrayType
 typedef struct Il2CppGenericInst
 {
     uint32_t type_argc;
-    const Il2CppType** type_argv;
+    const Il2Cpp::Type** type_argv;
 } Il2CppGenericInst;
 typedef struct Il2CppGenericContext
 {
@@ -677,13 +692,13 @@ typedef struct Il2CppGenericContext
 } Il2CppGenericContext;
 typedef struct Il2CppGenericClass
 {
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
     Il2CppGenericContext context;
-    Il2CppClass* cached_class;
+    Il2Cpp::Class* cached_class;
 } Il2CppGenericClass;
 typedef struct Il2CppGenericMethod
 {
-    const MethodInfo* methodDefinition;
+    const Il2Cpp::Method* methodDefinition;
     Il2CppGenericContext context;
 } Il2CppGenericMethod;
 typedef struct Il2CppType
@@ -693,7 +708,7 @@ typedef struct Il2CppType
         void* dummy;
         TypeDefinitionIndex __klassIndex;
         Il2CppMetadataTypeHandle typeHandle;
-        const Il2CppType* type;
+        const Il2Cpp::Type* type;
         Il2CppArrayType* array;
         GenericParameterIndex __genericParameterIndex;
         Il2CppMetadataGenericParameterHandle genericParameterHandle;
@@ -708,7 +723,7 @@ typedef struct Il2CppType
 } Il2CppType;
 typedef struct Il2CppMetadataFieldInfo
 {
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
     const char* name;
     uint32_t token;
 } Il2CppMetadataFieldInfo;
@@ -716,7 +731,7 @@ typedef struct Il2CppMetadataMethodInfo
 {
     Il2CppMetadataMethodDefinitionHandle handle;
     const char* name;
-    const Il2CppType* return_type;
+    const Il2Cpp::Type* return_type;
     uint32_t token;
     uint16_t flags;
     uint16_t iflags;
@@ -727,28 +742,28 @@ typedef struct Il2CppMetadataParameterInfo
 {
     const char* name;
     uint32_t token;
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
 } Il2CppMetadataParameterInfo;
 typedef struct Il2CppMetadataPropertyInfo
 {
     const char* name;
-    const MethodInfo* get;
-    const MethodInfo* set;
+    const Il2Cpp::Method* get;
+    const Il2Cpp::Method* set;
     uint32_t attrs;
     uint32_t token;
 } Il2CppMetadataPropertyInfo;
 typedef struct Il2CppMetadataEventInfo
 {
     const char* name;
-    const Il2CppType* type;
-    const MethodInfo* add;
-    const MethodInfo* remove;
-    const MethodInfo* raise;
+    const Il2Cpp::Type* type;
+    const Il2Cpp::Method* add;
+    const Il2Cpp::Method* remove;
+    const Il2Cpp::Method* raise;
     uint32_t token;
 } Il2CppMetadataEventInfo;
 typedef struct Il2CppInterfaceOffsetInfo
 {
-    const Il2CppType* interfaceType;
+    const Il2Cpp::Type* interfaceType;
     int32_t offset;
 } Il2CppInterfaceOffsetInfo;
 typedef struct Il2CppGenericParameterInfo
@@ -986,7 +1001,7 @@ typedef struct Il2CppWindowsRuntimeTypeName
 typedef void (*PInvokeMarshalToNativeFunc)(void* managedStructure, void* marshaledStructure);
 typedef void (*PInvokeMarshalFromNativeFunc)(void* marshaledStructure, void* managedStructure);
 typedef void (*PInvokeMarshalCleanupFunc)(void* marshaledStructure);
-typedef struct Il2CppIUnknown* (*CreateCCWFunc)(Il2CppObject* obj);
+typedef struct Il2CppIUnknown* (*CreateCCWFunc)(Il2Cpp::Object* obj);
 typedef struct Il2CppInteropData
 {
     Il2CppMethodPointer delegatePInvokeWrapperFunction;
@@ -995,7 +1010,7 @@ typedef struct Il2CppInteropData
     PInvokeMarshalCleanupFunc pinvokeMarshalCleanupFunction;
     CreateCCWFunc createCCWFunction;
     const Il2CppGuid* guid;
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
 } Il2CppInteropData;
 typedef struct Il2CppCodeGenModule Il2CppCodeGenModule;
 typedef struct Il2CppMetadataRegistration Il2CppMetadataRegistration;
@@ -1014,7 +1029,7 @@ typedef struct Il2CppCodeRegistration Il2CppCodeRegistration;
 typedef struct VirtualInvokeData
 {
     Il2CppMethodPointer methodPtr;
-    const MethodInfo* method;
+    const Il2Cpp::Method* method;
 } VirtualInvokeData;
 typedef enum Il2CppTypeNameFormat
 {
@@ -1025,102 +1040,102 @@ typedef enum Il2CppTypeNameFormat
 } Il2CppTypeNameFormat;
 typedef struct Il2CppDefaults
 {
-    Il2CppImage* corlib;
-    Il2CppImage* corlib_gen;
-    Il2CppClass* object_class;
-    Il2CppClass* byte_class;
-    Il2CppClass* void_class;
-    Il2CppClass* boolean_class;
-    Il2CppClass* sbyte_class;
-    Il2CppClass* int16_class;
-    Il2CppClass* uint16_class;
-    Il2CppClass* int32_class;
-    Il2CppClass* uint32_class;
-    Il2CppClass* int_class;
-    Il2CppClass* uint_class;
-    Il2CppClass* int64_class;
-    Il2CppClass* uint64_class;
-    Il2CppClass* single_class;
-    Il2CppClass* double_class;
-    Il2CppClass* char_class;
-    Il2CppClass* string_class;
-    Il2CppClass* enum_class;
-    Il2CppClass* array_class;
-    Il2CppClass* delegate_class;
-    Il2CppClass* multicastdelegate_class;
-    Il2CppClass* asyncresult_class;
-    Il2CppClass* manualresetevent_class;
-    Il2CppClass* typehandle_class;
-    Il2CppClass* fieldhandle_class;
-    Il2CppClass* methodhandle_class;
-    Il2CppClass* systemtype_class;
-    Il2CppClass* monotype_class;
-    Il2CppClass* exception_class;
-    Il2CppClass* threadabortexception_class;
-    Il2CppClass* thread_class;
-    Il2CppClass* internal_thread_class;
-    Il2CppClass* appdomain_class;
-    Il2CppClass* appdomain_setup_class;
-    Il2CppClass* member_info_class;
-    Il2CppClass* field_info_class;
-    Il2CppClass* method_info_class;
-    Il2CppClass* property_info_class;
-    Il2CppClass* event_info_class;
-    Il2CppClass* stringbuilder_class;
-    Il2CppClass* stack_frame_class;
-    Il2CppClass* stack_trace_class;
-    Il2CppClass* marshal_class;
-    Il2CppClass* typed_reference_class;
-    Il2CppClass* marshalbyrefobject_class;
-    Il2CppClass* generic_ilist_class;
-    Il2CppClass* generic_icollection_class;
-    Il2CppClass* generic_ienumerable_class;
-    Il2CppClass* generic_ireadonlylist_class;
-    Il2CppClass* generic_ireadonlycollection_class;
-    Il2CppClass* runtimetype_class;
-    Il2CppClass* generic_nullable_class;
-    Il2CppClass* il2cpp_com_object_class;
-    Il2CppClass* attribute_class;
-    Il2CppClass* customattribute_data_class;
-    Il2CppClass* customattribute_typed_argument_class;
-    Il2CppClass* customattribute_named_argument_class;
-    Il2CppClass* version;
-    Il2CppClass* culture_info;
-    Il2CppClass* async_call_class;
-    Il2CppClass* assembly_class;
-    Il2CppClass* assembly_name_class;
-    Il2CppClass* parameter_info_class;
-    Il2CppClass* module_class;
-    Il2CppClass* system_exception_class;
-    Il2CppClass* argument_exception_class;
-    Il2CppClass* wait_handle_class;
-    Il2CppClass* safe_handle_class;
-    Il2CppClass* sort_key_class;
-    Il2CppClass* dbnull_class;
-    Il2CppClass* error_wrapper_class;
-    Il2CppClass* missing_class;
-    Il2CppClass* value_type_class;
-    Il2CppClass* threadpool_wait_callback_class;
-    MethodInfo* threadpool_perform_wait_callback_method;
-    Il2CppClass* mono_method_message_class;
-    Il2CppClass* ireference_class;
-    Il2CppClass* ireferencearray_class;
-    Il2CppClass* ikey_value_pair_class;
-    Il2CppClass* key_value_pair_class;
-    Il2CppClass* windows_foundation_uri_class;
-    Il2CppClass* windows_foundation_iuri_runtime_class_class;
-    Il2CppClass* system_uri_class;
-    Il2CppClass* system_guid_class;
-    Il2CppClass* sbyte_shared_enum;
-    Il2CppClass* int16_shared_enum;
-    Il2CppClass* int32_shared_enum;
-    Il2CppClass* int64_shared_enum;
-    Il2CppClass* byte_shared_enum;
-    Il2CppClass* uint16_shared_enum;
-    Il2CppClass* uint32_shared_enum;
-    Il2CppClass* uint64_shared_enum;
-    Il2CppClass* il2cpp_fully_shared_type;
-    Il2CppClass* il2cpp_fully_shared_struct_type;
+    Il2Cpp::Image* corlib;
+    Il2Cpp::Image* corlib_gen;
+    Il2Cpp::Class* object_class;
+    Il2Cpp::Class* byte_class;
+    Il2Cpp::Class* void_class;
+    Il2Cpp::Class* boolean_class;
+    Il2Cpp::Class* sbyte_class;
+    Il2Cpp::Class* int16_class;
+    Il2Cpp::Class* uint16_class;
+    Il2Cpp::Class* int32_class;
+    Il2Cpp::Class* uint32_class;
+    Il2Cpp::Class* int_class;
+    Il2Cpp::Class* uint_class;
+    Il2Cpp::Class* int64_class;
+    Il2Cpp::Class* uint64_class;
+    Il2Cpp::Class* single_class;
+    Il2Cpp::Class* double_class;
+    Il2Cpp::Class* char_class;
+    Il2Cpp::Class* string_class;
+    Il2Cpp::Class* enum_class;
+    Il2Cpp::Class* array_class;
+    Il2Cpp::Class* delegate_class;
+    Il2Cpp::Class* multicastdelegate_class;
+    Il2Cpp::Class* asyncresult_class;
+    Il2Cpp::Class* manualresetevent_class;
+    Il2Cpp::Class* typehandle_class;
+    Il2Cpp::Class* fieldhandle_class;
+    Il2Cpp::Class* methodhandle_class;
+    Il2Cpp::Class* systemtype_class;
+    Il2Cpp::Class* monotype_class;
+    Il2Cpp::Class* exception_class;
+    Il2Cpp::Class* threadabortexception_class;
+    Il2Cpp::Class* thread_class;
+    Il2Cpp::Class* internal_thread_class;
+    Il2Cpp::Class* appdomain_class;
+    Il2Cpp::Class* appdomain_setup_class;
+    Il2Cpp::Class* member_info_class;
+    Il2Cpp::Class* field_info_class;
+    Il2Cpp::Class* method_info_class;
+    Il2Cpp::Class* property_info_class;
+    Il2Cpp::Class* event_info_class;
+    Il2Cpp::Class* stringbuilder_class;
+    Il2Cpp::Class* stack_frame_class;
+    Il2Cpp::Class* stack_trace_class;
+    Il2Cpp::Class* marshal_class;
+    Il2Cpp::Class* typed_reference_class;
+    Il2Cpp::Class* marshalbyrefobject_class;
+    Il2Cpp::Class* generic_ilist_class;
+    Il2Cpp::Class* generic_icollection_class;
+    Il2Cpp::Class* generic_ienumerable_class;
+    Il2Cpp::Class* generic_ireadonlylist_class;
+    Il2Cpp::Class* generic_ireadonlycollection_class;
+    Il2Cpp::Class* runtimetype_class;
+    Il2Cpp::Class* generic_nullable_class;
+    Il2Cpp::Class* il2cpp_com_object_class;
+    Il2Cpp::Class* attribute_class;
+    Il2Cpp::Class* customattribute_data_class;
+    Il2Cpp::Class* customattribute_typed_argument_class;
+    Il2Cpp::Class* customattribute_named_argument_class;
+    Il2Cpp::Class* version;
+    Il2Cpp::Class* culture_info;
+    Il2Cpp::Class* async_call_class;
+    Il2Cpp::Class* assembly_class;
+    Il2Cpp::Class* assembly_name_class;
+    Il2Cpp::Class* parameter_info_class;
+    Il2Cpp::Class* module_class;
+    Il2Cpp::Class* system_exception_class;
+    Il2Cpp::Class* argument_exception_class;
+    Il2Cpp::Class* wait_handle_class;
+    Il2Cpp::Class* safe_handle_class;
+    Il2Cpp::Class* sort_key_class;
+    Il2Cpp::Class* dbnull_class;
+    Il2Cpp::Class* error_wrapper_class;
+    Il2Cpp::Class* missing_class;
+    Il2Cpp::Class* value_type_class;
+    Il2Cpp::Class* threadpool_wait_callback_class;
+    Il2Cpp::Method* threadpool_perform_wait_callback_method;
+    Il2Cpp::Class* mono_method_message_class;
+    Il2Cpp::Class* ireference_class;
+    Il2Cpp::Class* ireferencearray_class;
+    Il2Cpp::Class* ikey_value_pair_class;
+    Il2Cpp::Class* key_value_pair_class;
+    Il2Cpp::Class* windows_foundation_uri_class;
+    Il2Cpp::Class* windows_foundation_iuri_runtime_class_class;
+    Il2Cpp::Class* system_uri_class;
+    Il2Cpp::Class* system_guid_class;
+    Il2Cpp::Class* sbyte_shared_enum;
+    Il2Cpp::Class* int16_shared_enum;
+    Il2Cpp::Class* int32_shared_enum;
+    Il2Cpp::Class* int64_shared_enum;
+    Il2Cpp::Class* byte_shared_enum;
+    Il2Cpp::Class* uint16_shared_enum;
+    Il2Cpp::Class* uint32_shared_enum;
+    Il2Cpp::Class* uint64_shared_enum;
+    Il2Cpp::Class* il2cpp_fully_shared_type;
+    Il2Cpp::Class* il2cpp_fully_shared_struct_type;
 } Il2CppDefaults;
 extern Il2CppDefaults il2cpp_defaults;
 typedef struct Il2CppClass Il2CppClass;
@@ -1131,36 +1146,36 @@ typedef struct MemberInfo MemberInfo;
 typedef struct CustomAttributesCache
 {
     int count;
-    Il2CppObject** attributes;
+    Il2Cpp::Object** attributes;
 } CustomAttributesCache;
 typedef struct FieldInfo
 {
     const char* name;
-    const Il2CppType* type;
-    Il2CppClass* parent;
+    const Il2Cpp::Type* type;
+    Il2Cpp::Class* parent;
     int32_t offset;
     uint32_t token;
 } FieldInfo;
 typedef struct PropertyInfo
 {
-    Il2CppClass* parent;
+    Il2Cpp::Class* parent;
     const char* name;
-    const MethodInfo* get;
-    const MethodInfo* set;
+    const Il2Cpp::Method* get;
+    const Il2Cpp::Method* set;
     uint32_t attrs;
     uint32_t token;
 } PropertyInfo;
 typedef struct EventInfo
 {
     const char* name;
-    const Il2CppType* eventType;
-    Il2CppClass* parent;
-    const MethodInfo* add;
-    const MethodInfo* remove;
-    const MethodInfo* raise;
+    const Il2Cpp::Type* eventType;
+    Il2Cpp::Class* parent;
+    const Il2Cpp::Method* add;
+    const Il2Cpp::Method* remove;
+    const Il2Cpp::Method* raise;
     uint32_t token;
 } EventInfo;
-typedef void (*InvokerMethod)(Il2CppMethodPointer, const MethodInfo*, void*, void**, void*);
+typedef void (*InvokerMethod)(Il2CppMethodPointer, const Il2Cpp::Method*, void*, void**, void*);
 typedef enum MethodVariableKind
 {
     kMethodVariableKind_This,
@@ -1241,9 +1256,9 @@ typedef struct Il2CppDebuggerMetadataRegistration
 typedef union Il2CppRGCTXData
 {
     void* rgctxDataDummy;
-    const MethodInfo* method;
-    const Il2CppType* type;
-    Il2CppClass* klass;
+    const Il2Cpp::Method* method;
+    const Il2Cpp::Type* type;
+    Il2Cpp::Class* klass;
 } Il2CppRGCTXData;
 typedef struct MethodInfo
 {
@@ -1251,9 +1266,9 @@ typedef struct MethodInfo
     Il2CppMethodPointer virtualMethodPointer;
     InvokerMethod invoker_method;
     const char* name;
-    Il2CppClass* klass;
-    const Il2CppType* return_type;
-    const Il2CppType** parameters;
+    Il2Cpp::Class* klass;
+    const Il2Cpp::Type* return_type;
+    const Il2Cpp::Type** parameters;
     union
     {
         const Il2CppRGCTXData* rgctx_data;
@@ -1277,35 +1292,35 @@ typedef struct MethodInfo
 } MethodInfo;
 typedef struct Il2CppRuntimeInterfaceOffsetPair
 {
-    Il2CppClass* interfaceType;
+    Il2Cpp::Class* interfaceType;
     int32_t offset;
 } Il2CppRuntimeInterfaceOffsetPair;
 typedef struct Il2CppClass
 {
-    const Il2CppImage* image;
+    const Il2Cpp::Image* image;
     void* gc_desc;
     const char* name;
     const char* namespaze;
     Il2CppType byval_arg;
     Il2CppType this_arg;
-    Il2CppClass* element_class;
-    Il2CppClass* castClass;
-    Il2CppClass* declaringType;
-    Il2CppClass* parent;
+    Il2Cpp::Class* element_class;
+    Il2Cpp::Class* castClass;
+    Il2Cpp::Class* declaringType;
+    Il2Cpp::Class* parent;
     Il2CppGenericClass* generic_class;
     Il2CppMetadataTypeHandle typeMetadataHandle;
     const Il2CppInteropData* interopData;
-    Il2CppClass* klass;
-    FieldInfo* fields;
+    Il2Cpp::Class* klass;
+    Il2Cpp::Field* fields;
     const EventInfo* events;
-    const PropertyInfo* properties;
-    const MethodInfo** methods;
-    Il2CppClass** nestedTypes;
-    Il2CppClass** implementedInterfaces;
+    const Il2Cpp::Property* properties;
+    const Il2Cpp::Method** methods;
+    Il2Cpp::Class** nestedTypes;
+    Il2Cpp::Class** implementedInterfaces;
     Il2CppRuntimeInterfaceOffsetPair* interfaceOffsets;
     void* static_fields;
     const Il2CppRGCTXData* rgctx_data;
-    struct Il2CppClass** typeHierarchy;
+    struct Il2Cpp::Class** typeHierarchy;
     void* unity_user_data;
     uint32_t initializationExceptionGCHandle;
     uint32_t cctor_started;
@@ -1354,30 +1369,30 @@ typedef struct Il2CppClass
 } Il2CppClass;
 
 typedef struct Il2CppClass_0 {
-    const Il2CppImage* image;
+    const Il2Cpp::Image* image;
     void* gc_desc;
     const char* name;
     const char* namespaze;
     Il2CppType byval_arg;
     Il2CppType this_arg;
-    Il2CppClass* element_class;
-    Il2CppClass* castClass;
-    Il2CppClass* declaringType;
-    Il2CppClass* parent;
+    Il2Cpp::Class* element_class;
+    Il2Cpp::Class* castClass;
+    Il2Cpp::Class* declaringType;
+    Il2Cpp::Class* parent;
     Il2CppGenericClass* generic_class;
     Il2CppMetadataTypeHandle typeMetadataHandle;
     const Il2CppInteropData* interopData;
-    Il2CppClass* klass;
-    FieldInfo* fields;
+    Il2Cpp::Class* klass;
+    Il2Cpp::Field* fields;
     const EventInfo* events;
-    const PropertyInfo* properties;
-    const MethodInfo** methods;
-    Il2CppClass** nestedTypes;
-    Il2CppClass** implementedInterfaces;
+    const Il2Cpp::Property* properties;
+    const Il2Cpp::Method** methods;
+    Il2Cpp::Class** nestedTypes;
+    Il2Cpp::Class** implementedInterfaces;
 } Il2CppClass_0;
 
 typedef struct Il2CppClass_1 {
-    struct Il2CppClass** typeHierarchy;
+    struct Il2Cpp::Class** typeHierarchy;
     void* unity_user_data;
     uint32_t initializationExceptionGCHandle;
     uint32_t cctor_started;
@@ -1449,7 +1464,7 @@ typedef struct Il2CppDomain
     Il2CppAppDomain* domain;
     Il2CppAppDomainSetup* setup;
     Il2CppAppContext* default_context;
-    Il2CppObject* ephemeron_tombstone;
+    Il2Cpp::Object* ephemeron_tombstone;
     const char* friendly_name;
     uint32_t domain_id;
     volatile int threadpool_jobs;
@@ -1473,7 +1488,7 @@ typedef struct Il2CppImage
 {
     const char* name;
     const char* nameNoExt;
-    Il2CppAssembly* assembly;
+    Il2Cpp::Assembly* assembly;
     uint32_t typeCount;
     uint32_t exportedTypeCount;
     uint32_t customAttributeCount;
@@ -1485,7 +1500,7 @@ typedef struct Il2CppImage
 } Il2CppImage;
 typedef struct Il2CppAssembly
 {
-    Il2CppImage* image;
+    Il2Cpp::Image* image;
     uint32_t token;
     int32_t referencedAssemblyStart;
     int32_t referencedAssemblyCount;
@@ -1521,7 +1536,7 @@ typedef struct Il2CppTokenAdjustorThunkPair
 } Il2CppTokenAdjustorThunkPair;
 typedef struct Il2CppWindowsRuntimeFactoryTableEntry
 {
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
     Il2CppMethodPointer createFactoryFunction;
 } Il2CppWindowsRuntimeFactoryTableEntry;
 typedef struct Il2CppCodeGenModule
@@ -1571,7 +1586,7 @@ typedef struct Il2CppMetadataRegistration
     int32_t genericMethodTableCount;
     const Il2CppGenericMethodFunctionsDefinitions* genericMethodTable;
     int32_t typesCount;
-    const Il2CppType* const* types;
+    const Il2Cpp::Type* const* types;
     int32_t methodSpecsCount;
     const Il2CppMethodSpec* methodSpecs;
     FieldIndex fieldOffsetsCount;
@@ -1670,7 +1685,7 @@ typedef struct Il2CppObject
 {
     union
     {
-        Il2CppClass* klass;
+        Il2Cpp::Class* klass;
         Il2CppVTable* vtable;
     };
     MonitorData* monitor;
@@ -1703,14 +1718,14 @@ typedef struct Il2CppString
 typedef struct Il2CppReflectionType
 {
     Il2CppObject object;
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
 } Il2CppReflectionType;
 typedef struct Il2CppReflectionRuntimeType
 {
     Il2CppReflectionType type;
-    Il2CppObject* type_info;
-    Il2CppObject* genericCache;
-    Il2CppObject* serializationCtor;
+    Il2Cpp::Object* type_info;
+    Il2Cpp::Object* genericCache;
+    Il2Cpp::Object* serializationCtor;
 } Il2CppReflectionRuntimeType;
 typedef struct Il2CppReflectionMonoType
 {
@@ -1719,7 +1734,7 @@ typedef struct Il2CppReflectionMonoType
 typedef struct Il2CppReflectionEvent
 {
     Il2CppObject object;
-    Il2CppObject* cached_add_event;
+    Il2Cpp::Object* cached_add_event;
 } Il2CppReflectionEvent;
 typedef struct Il2CppReflectionMonoEvent
 {
@@ -1731,7 +1746,7 @@ typedef struct Il2CppReflectionMonoEventInfo
 {
     Il2CppReflectionType* declaringType;
     Il2CppReflectionType* reflectedType;
-    Il2CppString* name;
+    Il2Cpp::String* name;
     Il2CppReflectionMethod* addMethod;
     Il2CppReflectionMethod* removeMethod;
     Il2CppReflectionMethod* raiseMethod;
@@ -1741,23 +1756,23 @@ typedef struct Il2CppReflectionMonoEventInfo
 typedef struct Il2CppReflectionField
 {
     Il2CppObject object;
-    Il2CppClass* klass;
-    FieldInfo* field;
-    Il2CppString* name;
+    Il2Cpp::Class* klass;
+    Il2Cpp::Field* field;
+    Il2Cpp::String* name;
     Il2CppReflectionType* type;
     uint32_t attrs;
 } Il2CppReflectionField;
 typedef struct Il2CppReflectionProperty
 {
     Il2CppObject object;
-    Il2CppClass* klass;
-    const PropertyInfo* property;
+    Il2Cpp::Class* klass;
+    const Il2Cpp::Property* property;
 } Il2CppReflectionProperty;
 typedef struct Il2CppReflectionMethod
 {
     Il2CppObject object;
-    const MethodInfo* method;
-    Il2CppString* name;
+    const Il2Cpp::Method* method;
+    Il2Cpp::String* name;
     Il2CppReflectionType* reftype;
 } Il2CppReflectionMethod;
 typedef struct Il2CppReflectionGenericMethod
@@ -1776,7 +1791,7 @@ typedef struct Il2CppPropertyInfo
 {
     Il2CppReflectionType* parent;
     Il2CppReflectionType* declaringType;
-    Il2CppString* name;
+    Il2Cpp::String* name;
     Il2CppReflectionMethod* get;
     Il2CppReflectionMethod* set;
     uint32_t attrs;
@@ -1786,53 +1801,53 @@ typedef struct Il2CppReflectionParameter
     Il2CppObject object;
     uint32_t AttrsImpl;
     Il2CppReflectionType* ClassImpl;
-    Il2CppObject* DefaultValueImpl;
-    Il2CppObject* MemberImpl;
-    Il2CppString* NameImpl;
+    Il2Cpp::Object* DefaultValueImpl;
+    Il2Cpp::Object* MemberImpl;
+    Il2Cpp::String* NameImpl;
     int32_t PositionImpl;
-    Il2CppObject* MarshalAs;
+    Il2Cpp::Object* MarshalAs;
 } Il2CppReflectionParameter;
 typedef struct Il2CppReflectionModule
 {
     Il2CppObject obj;
-    const Il2CppImage* image;
+    const Il2Cpp::Image* image;
     Il2CppReflectionAssembly* assembly;
-    Il2CppString* fqname;
-    Il2CppString* name;
-    Il2CppString* scopename;
+    Il2Cpp::String* fqname;
+    Il2Cpp::String* name;
+    Il2Cpp::String* scopename;
     uint8_t is_resource;
     uint32_t token;
 } Il2CppReflectionModule;
 typedef struct Il2CppReflectionAssemblyName
 {
     Il2CppObject obj;
-    Il2CppString* name;
-    Il2CppString* codebase;
+    Il2Cpp::String* name;
+    Il2Cpp::String* codebase;
     int32_t major, minor, build, revision;
-    Il2CppObject* cultureInfo;
+    Il2Cpp::Object* cultureInfo;
     uint32_t flags;
     uint32_t hashalg;
-    Il2CppObject* keypair;
+    Il2Cpp::Object* keypair;
     Il2CppArray* publicKey;
     Il2CppArray* keyToken;
     uint32_t versioncompat;
-    Il2CppObject* version;
+    Il2Cpp::Object* version;
     uint32_t processor_architecture;
     uint32_t contentType;
 } Il2CppReflectionAssemblyName;
 typedef struct Il2CppReflectionAssembly
 {
     Il2CppObject object;
-    const Il2CppAssembly* assembly;
-    Il2CppObject* evidence;
-    Il2CppObject* resolve_event_holder;
-    Il2CppObject* minimum;
-    Il2CppObject* optional;
-    Il2CppObject* refuse;
-    Il2CppObject* granted;
-    Il2CppObject* denied;
+    const Il2Cpp::Assembly* assembly;
+    Il2Cpp::Object* evidence;
+    Il2Cpp::Object* resolve_event_holder;
+    Il2Cpp::Object* minimum;
+    Il2Cpp::Object* optional;
+    Il2Cpp::Object* refuse;
+    Il2Cpp::Object* granted;
+    Il2Cpp::Object* denied;
     uint8_t from_byte_array;
-    Il2CppString* name;
+    Il2Cpp::String* name;
 } Il2CppReflectionAssembly;
 typedef struct Il2CppReflectionMarshal
 {
@@ -1840,10 +1855,10 @@ typedef struct Il2CppReflectionMarshal
     int32_t count;
     int32_t type;
     int32_t eltype;
-    Il2CppString* guid;
-    Il2CppString* mcookie;
-    Il2CppString* marshaltype;
-    Il2CppObject* marshaltyperef;
+    Il2Cpp::String* guid;
+    Il2Cpp::String* mcookie;
+    Il2Cpp::String* marshaltype;
+    Il2Cpp::Object* marshaltyperef;
     int32_t param_num;
     uint8_t has_size;
 } Il2CppReflectionMarshal;
@@ -1877,14 +1892,14 @@ typedef struct Il2CppInternalThread
     void* native_handle;
     Il2CppThreadName name;
     uint32_t state;
-    Il2CppObject* abort_exc;
+    Il2Cpp::Object* abort_exc;
     int abort_state_handle;
     uint64_t tid;
     intptr_t debugger_thread;
     void** static_data;
     void* runtime_thread_info;
-    Il2CppObject* current_appcontext;
-    Il2CppObject* root_domain_thread;
+    Il2Cpp::Object* current_appcontext;
+    Il2Cpp::Object* root_domain_thread;
     Il2CppArray* _serialized_principal;
     int _serialized_principal_version;
     void* appdomain_refs;
@@ -1913,8 +1928,8 @@ typedef struct Il2CppIOSelectorJob
 {
     Il2CppObject object;
     int32_t operation;
-    Il2CppObject* callback;
-    Il2CppObject* state;
+    Il2Cpp::Object* callback;
+    Il2Cpp::Object* state;
 } Il2CppIOSelectorJob;
 typedef enum
 {
@@ -1930,33 +1945,33 @@ typedef struct Il2CppMethodMessage
     Il2CppArray* args;
     Il2CppArray* names;
     Il2CppArray* arg_types;
-    Il2CppObject* ctx;
-    Il2CppObject* rval;
-    Il2CppObject* exc;
+    Il2Cpp::Object* ctx;
+    Il2Cpp::Object* rval;
+    Il2Cpp::Object* exc;
     Il2CppAsyncResult* async_result;
     uint32_t call_type;
 } Il2CppMethodMessage;
 typedef struct Il2CppAppDomainSetup
 {
     Il2CppObject object;
-    Il2CppString* application_base;
-    Il2CppString* application_name;
-    Il2CppString* cache_path;
-    Il2CppString* configuration_file;
-    Il2CppString* dynamic_base;
-    Il2CppString* license_file;
-    Il2CppString* private_bin_path;
-    Il2CppString* private_bin_path_probe;
-    Il2CppString* shadow_copy_directories;
-    Il2CppString* shadow_copy_files;
+    Il2Cpp::String* application_base;
+    Il2Cpp::String* application_name;
+    Il2Cpp::String* cache_path;
+    Il2Cpp::String* configuration_file;
+    Il2Cpp::String* dynamic_base;
+    Il2Cpp::String* license_file;
+    Il2Cpp::String* private_bin_path;
+    Il2Cpp::String* private_bin_path_probe;
+    Il2Cpp::String* shadow_copy_directories;
+    Il2Cpp::String* shadow_copy_files;
     uint8_t publisher_policy;
     uint8_t path_changed;
     int loader_optimization;
     uint8_t disallow_binding_redirects;
     uint8_t disallow_code_downloads;
-    Il2CppObject* activation_arguments;
-    Il2CppObject* domain_initializer;
-    Il2CppObject* application_trust;
+    Il2Cpp::Object* activation_arguments;
+    Il2Cpp::Object* domain_initializer;
+    Il2Cpp::Object* application_trust;
     Il2CppArray* domain_initializer_args;
     uint8_t disallow_appbase_probe;
     Il2CppArray* configuration_bytes;
@@ -1966,30 +1981,30 @@ typedef struct Il2CppThread
 {
     Il2CppObject obj;
     Il2CppInternalThread* internal_thread;
-    Il2CppObject* start_obj;
-    Il2CppException* pending_exception;
-    Il2CppObject* principal;
+    Il2Cpp::Object* start_obj;
+    Il2Cpp::Exception* pending_exception;
+    Il2Cpp::Object* principal;
     int32_t principal_version;
     Il2CppDelegate* delegate;
-    Il2CppObject* executionContext;
+    Il2Cpp::Object* executionContext;
     uint8_t executionContextBelongsToOuterScope;
 } Il2CppThread;
 typedef struct Il2CppException
 {
     Il2CppObject object;
-    Il2CppString* className;
-    Il2CppString* message;
-    Il2CppObject* _data;
-    struct Il2CppException* inner_ex;
-    Il2CppString* _helpURL;
+    Il2Cpp::String* className;
+    Il2Cpp::String* message;
+    Il2Cpp::Object* _data;
+    struct Il2Cpp::Exception* inner_ex;
+    Il2Cpp::String* _helpURL;
     Il2CppArray* trace_ips;
-    Il2CppString* stack_trace;
-    Il2CppString* remote_stack_trace;
+    Il2Cpp::String* stack_trace;
+    Il2Cpp::String* remote_stack_trace;
     int remote_stack_index;
-    Il2CppObject* _dynamicMethods;
+    Il2Cpp::Object* _dynamicMethods;
     il2cpp_hresult_t hresult;
-    Il2CppString* source;
-    Il2CppObject* safeSerializationManager;
+    Il2Cpp::String* source;
+    Il2Cpp::Object* safeSerializationManager;
     Il2CppArray* captured_traces;
     Il2CppArray* native_trace_ips;
     int32_t caught_in_unmanaged;
@@ -2001,29 +2016,29 @@ typedef struct Il2CppSystemException
 typedef struct Il2CppArgumentException
 {
     Il2CppException base;
-    Il2CppString* argName;
+    Il2Cpp::String* argName;
 } Il2CppArgumentException;
 typedef struct Il2CppTypedRef
 {
-    const Il2CppType* type;
+    const Il2Cpp::Type* type;
     void* value;
-    Il2CppClass* klass;
+    Il2Cpp::Class* klass;
 } Il2CppTypedRef;
 typedef struct Il2CppDelegate
 {
     Il2CppObject object;
     Il2CppMethodPointer method_ptr;
     Il2CppMethodPointer invoke_impl;
-    Il2CppObject* target;
-    const MethodInfo* method;
+    Il2Cpp::Object* target;
+    const Il2Cpp::Method* method;
     void* delegate_trampoline;
     intptr_t extraArg;
-    Il2CppObject* invoke_impl_this;
+    Il2Cpp::Object* invoke_impl_this;
     void* interp_method;
     void* interp_invoke_impl;
     Il2CppReflectionMethod* method_info;
     Il2CppReflectionMethod* original_method_info;
-    Il2CppObject* data;
+    Il2Cpp::Object* data;
     uint8_t method_is_virtual;
 } Il2CppDelegate;
 typedef struct Il2CppMulticastDelegate
@@ -2034,14 +2049,14 @@ typedef struct Il2CppMulticastDelegate
 typedef struct Il2CppMarshalByRefObject
 {
     Il2CppObject obj;
-    Il2CppObject* identity;
+    Il2Cpp::Object* identity;
 } Il2CppMarshalByRefObject;
 typedef void* Il2CppFullySharedGenericAny;
 typedef void* Il2CppFullySharedGenericStruct;
 typedef struct Il2CppAppDomain
 {
     Il2CppMarshalByRefObject mbr;
-    Il2CppDomain* data;
+    Il2Cpp::Domain* data;
 } Il2CppAppDomain;
 typedef struct Il2CppStackFrame
 {
@@ -2051,31 +2066,31 @@ typedef struct Il2CppStackFrame
     uint64_t methodAddress;
     uint32_t methodIndex;
     Il2CppReflectionMethod* method;
-    Il2CppString* filename;
+    Il2Cpp::String* filename;
     int32_t line;
     int32_t column;
-    Il2CppString* internal_method_name;
+    Il2Cpp::String* internal_method_name;
 } Il2CppStackFrame;
 typedef struct Il2CppDateTimeFormatInfo
 {
     Il2CppObject obj;
-    Il2CppObject* CultureData;
-    Il2CppString* Name;
-    Il2CppString* LangName;
-    Il2CppObject* CompareInfo;
-    Il2CppObject* CultureInfo;
-    Il2CppString* AMDesignator;
-    Il2CppString* PMDesignator;
-    Il2CppString* DateSeparator;
-    Il2CppString* GeneralShortTimePattern;
-    Il2CppString* GeneralLongTimePattern;
-    Il2CppString* TimeSeparator;
-    Il2CppString* MonthDayPattern;
-    Il2CppString* DateTimeOffsetPattern;
-    Il2CppObject* Calendar;
+    Il2Cpp::Object* CultureData;
+    Il2Cpp::String* Name;
+    Il2Cpp::String* LangName;
+    Il2Cpp::Object* CompareInfo;
+    Il2Cpp::Object* CultureInfo;
+    Il2Cpp::String* AMDesignator;
+    Il2Cpp::String* PMDesignator;
+    Il2Cpp::String* DateSeparator;
+    Il2Cpp::String* GeneralShortTimePattern;
+    Il2Cpp::String* GeneralLongTimePattern;
+    Il2Cpp::String* TimeSeparator;
+    Il2Cpp::String* MonthDayPattern;
+    Il2Cpp::String* DateTimeOffsetPattern;
+    Il2Cpp::Object* Calendar;
     uint32_t FirstDayOfWeek;
     uint32_t CalendarWeekRule;
-    Il2CppString* FullDateTimePattern;
+    Il2Cpp::String* FullDateTimePattern;
     Il2CppArray* AbbreviatedDayNames;
     Il2CppArray* ShortDayNames;
     Il2CppArray* DayNames;
@@ -2084,11 +2099,11 @@ typedef struct Il2CppDateTimeFormatInfo
     Il2CppArray* GenitiveMonthNames;
     Il2CppArray* GenitiveAbbreviatedMonthNames;
     Il2CppArray* LeapYearMonthNames;
-    Il2CppString* LongDatePattern;
-    Il2CppString* ShortDatePattern;
-    Il2CppString* YearMonthPattern;
-    Il2CppString* LongTimePattern;
-    Il2CppString* ShortTimePattern;
+    Il2Cpp::String* LongDatePattern;
+    Il2Cpp::String* ShortDatePattern;
+    Il2Cpp::String* YearMonthPattern;
+    Il2Cpp::String* LongTimePattern;
+    Il2Cpp::String* ShortTimePattern;
     Il2CppArray* YearMonthPatterns;
     Il2CppArray* ShortDatePatterns;
     Il2CppArray* LongDatePatterns;
@@ -2106,8 +2121,8 @@ typedef struct Il2CppDateTimeFormatInfo
     int32_t DataItem;
     uint8_t IsDefaultCalendar;
     Il2CppArray* DateWords;
-    Il2CppString* FullTimeSpanPositivePattern;
-    Il2CppString* FullTimeSpanNegativePattern;
+    Il2Cpp::String* FullTimeSpanPositivePattern;
+    Il2Cpp::String* FullTimeSpanNegativePattern;
     Il2CppArray* dtfiTokenHash;
 } Il2CppDateTimeFormatInfo;
 typedef struct Il2CppNumberFormatInfo
@@ -2116,21 +2131,21 @@ typedef struct Il2CppNumberFormatInfo
     Il2CppArray* numberGroupSizes;
     Il2CppArray* currencyGroupSizes;
     Il2CppArray* percentGroupSizes;
-    Il2CppString* positiveSign;
-    Il2CppString* negativeSign;
-    Il2CppString* numberDecimalSeparator;
-    Il2CppString* numberGroupSeparator;
-    Il2CppString* currencyGroupSeparator;
-    Il2CppString* currencyDecimalSeparator;
-    Il2CppString* currencySymbol;
-    Il2CppString* ansiCurrencySymbol;
-    Il2CppString* naNSymbol;
-    Il2CppString* positiveInfinitySymbol;
-    Il2CppString* negativeInfinitySymbol;
-    Il2CppString* percentDecimalSeparator;
-    Il2CppString* percentGroupSeparator;
-    Il2CppString* percentSymbol;
-    Il2CppString* perMilleSymbol;
+    Il2Cpp::String* positiveSign;
+    Il2Cpp::String* negativeSign;
+    Il2Cpp::String* numberDecimalSeparator;
+    Il2Cpp::String* numberGroupSeparator;
+    Il2Cpp::String* currencyGroupSeparator;
+    Il2Cpp::String* currencyDecimalSeparator;
+    Il2Cpp::String* currencySymbol;
+    Il2Cpp::String* ansiCurrencySymbol;
+    Il2Cpp::String* naNSymbol;
+    Il2Cpp::String* positiveInfinitySymbol;
+    Il2Cpp::String* negativeInfinitySymbol;
+    Il2Cpp::String* percentDecimalSeparator;
+    Il2Cpp::String* percentGroupSeparator;
+    Il2Cpp::String* percentSymbol;
+    Il2Cpp::String* perMilleSymbol;
     Il2CppArray* nativeDigits;
     int dataItem;
     int numberDecimalDigits;
@@ -2177,9 +2192,9 @@ typedef struct NumberFormatEntryManaged
 typedef struct Il2CppCultureData
 {
     Il2CppObject obj;
-    Il2CppString* AMDesignator;
-    Il2CppString* PMDesignator;
-    Il2CppString* TimeSeparator;
+    Il2Cpp::String* AMDesignator;
+    Il2Cpp::String* PMDesignator;
+    Il2Cpp::String* TimeSeparator;
     Il2CppArray* LongTimePatterns;
     Il2CppArray* ShortTimePatterns;
     uint32_t FirstDayOfWeek;
@@ -2188,11 +2203,11 @@ typedef struct Il2CppCultureData
 typedef struct Il2CppCalendarData
 {
     Il2CppObject obj;
-    Il2CppString* NativeName;
+    Il2Cpp::String* NativeName;
     Il2CppArray* ShortDatePatterns;
     Il2CppArray* YearMonthPatterns;
     Il2CppArray* LongDatePatterns;
-    Il2CppString* MonthDayPattern;
+    Il2Cpp::String* MonthDayPattern;
     Il2CppArray* EraNames;
     Il2CppArray* AbbreviatedEraNames;
     Il2CppArray* AbbreviatedEnglishEraNames;
@@ -2216,38 +2231,38 @@ typedef struct Il2CppCultureInfo
     uint8_t use_user_override;
     Il2CppNumberFormatInfo* number_format;
     Il2CppDateTimeFormatInfo* datetime_format;
-    Il2CppObject* textinfo;
-    Il2CppString* name;
-    Il2CppString* englishname;
-    Il2CppString* nativename;
-    Il2CppString* iso3lang;
-    Il2CppString* iso2lang;
-    Il2CppString* win3lang;
-    Il2CppString* territory;
+    Il2Cpp::Object* textinfo;
+    Il2Cpp::String* name;
+    Il2Cpp::String* englishname;
+    Il2Cpp::String* nativename;
+    Il2Cpp::String* iso3lang;
+    Il2Cpp::String* iso2lang;
+    Il2Cpp::String* win3lang;
+    Il2Cpp::String* territory;
     Il2CppArray* native_calendar_names;
-    Il2CppString* compareinfo;
+    Il2Cpp::String* compareinfo;
     const void* text_info_data;
     int dataItem;
-    Il2CppObject* calendar;
-    Il2CppObject* parent_culture;
+    Il2Cpp::Object* calendar;
+    Il2Cpp::Object* parent_culture;
     uint8_t constructed;
     Il2CppArray* cached_serialized_form;
-    Il2CppObject* cultureData;
+    Il2Cpp::Object* cultureData;
     uint8_t isInherited;
 } Il2CppCultureInfo;
 typedef struct Il2CppRegionInfo
 {
     Il2CppObject obj;
     int32_t geo_id;
-    Il2CppString* iso2name;
-    Il2CppString* iso3name;
-    Il2CppString* win3name;
-    Il2CppString* english_name;
-    Il2CppString* native_name;
-    Il2CppString* currency_symbol;
-    Il2CppString* iso_currency_symbol;
-    Il2CppString* currency_english_name;
-    Il2CppString* currency_native_name;
+    Il2Cpp::String* iso2name;
+    Il2Cpp::String* iso3name;
+    Il2Cpp::String* win3name;
+    Il2Cpp::String* english_name;
+    Il2Cpp::String* native_name;
+    Il2Cpp::String* currency_symbol;
+    Il2Cpp::String* iso_currency_symbol;
+    Il2Cpp::String* currency_english_name;
+    Il2Cpp::String* currency_native_name;
 } Il2CppRegionInfo;
 typedef struct Il2CppSafeHandle
 {
@@ -2278,7 +2293,7 @@ typedef struct Il2CppSocketAddress
 typedef struct Il2CppSortKey
 {
     Il2CppObject base;
-    Il2CppString* str;
+    Il2Cpp::String* str;
     Il2CppArray* key;
     int32_t options;
     int32_t lcid;
@@ -2291,7 +2306,7 @@ typedef struct Il2CppErrorWrapper
 typedef struct Il2CppAsyncResult
 {
     Il2CppObject base;
-    Il2CppObject* async_state;
+    Il2Cpp::Object* async_state;
     Il2CppWaitHandle* handle;
     Il2CppDelegate* async_delegate;
     void* data;
@@ -2299,30 +2314,30 @@ typedef struct Il2CppAsyncResult
     uint8_t sync_completed;
     uint8_t completed;
     uint8_t endinvoke_called;
-    Il2CppObject* async_callback;
-    Il2CppObject* execution_context;
-    Il2CppObject* original_context;
+    Il2Cpp::Object* async_callback;
+    Il2Cpp::Object* execution_context;
+    Il2Cpp::Object* original_context;
 } Il2CppAsyncResult;
 typedef struct Il2CppAsyncCall
 {
     Il2CppObject base;
     Il2CppMethodMessage* msg;
-    MethodInfo* cb_method;
+    Il2Cpp::Method* cb_method;
     Il2CppDelegate* cb_target;
-    Il2CppObject* state;
-    Il2CppObject* res;
+    Il2Cpp::Object* state;
+    Il2Cpp::Object* res;
     Il2CppArray* out_args;
 } Il2CppAsyncCall;
 typedef struct Il2CppExceptionWrapper Il2CppExceptionWrapper;
 typedef struct Il2CppExceptionWrapper
 {
-    Il2CppException* ex;
+    Il2Cpp::Exception* ex;
 } Il2CppExceptionWrapper;
 typedef struct Il2CppIOAsyncResult
 {
     Il2CppObject base;
     Il2CppDelegate* callback;
-    Il2CppObject* state;
+    Il2Cpp::Object* state;
     Il2CppWaitHandle* wait_handle;
     uint8_t completed_synchronously;
     uint8_t completed;
@@ -2330,21 +2345,21 @@ typedef struct Il2CppIOAsyncResult
 typedef struct Il2CppSocketAsyncResult
 {
     Il2CppIOAsyncResult base;
-    Il2CppObject* socket;
+    Il2Cpp::Object* socket;
     int32_t operation;
-    Il2CppException* delayedException;
-    Il2CppObject* endPoint;
+    Il2Cpp::Exception* delayedException;
+    Il2Cpp::Object* endPoint;
     Il2CppArray* buffer;
     int32_t offset;
     int32_t size;
     int32_t socket_flags;
-    Il2CppObject* acceptSocket;
+    Il2Cpp::Object* acceptSocket;
     Il2CppArray* addresses;
     int32_t port;
-    Il2CppObject* buffers;
+    Il2Cpp::Object* buffers;
     uint8_t reuseSocket;
     int32_t currentAddress;
-    Il2CppObject* acceptedSocket;
+    Il2Cpp::Object* acceptedSocket;
     int32_t total;
     int32_t error;
     int32_t endCalled;
@@ -2359,7 +2374,7 @@ typedef struct Il2CppManifestResourceInfo
 {
     Il2CppObject object;
     Il2CppReflectionAssembly* assembly;
-    Il2CppString* filename;
+    Il2Cpp::String* filename;
     uint32_t location;
 } Il2CppManifestResourceInfo;
 typedef struct Il2CppAppContext
@@ -2425,3 +2440,6 @@ typedef struct Il2CppByReference
 {
     intptr_t value;
 } Il2CppByReference;
+
+#define FIELD_ATTRIBUTE_STATIC 0x0010
+#define FIELD_ATTRIBUTE_LITERAL 0x0040

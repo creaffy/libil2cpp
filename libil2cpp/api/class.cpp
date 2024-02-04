@@ -214,7 +214,7 @@ int32_t Class::GetArrayElementSize() const
 
 const Type* Class::GetType() const
 {
-    static auto _ApiFunction = Resolver::GetExport<const Type * (*)(const Class*)>("il2cpp_class_from_type");
+    static auto _ApiFunction = Resolver::GetExport<const Type * (*)(const Class*)>("il2cpp_class_get_type");
     return _ApiFunction(this);
 }
 
