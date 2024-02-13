@@ -35,8 +35,3 @@ const Property* Resolver::GetProperty(std::string_view _AssemblyName, std::strin
         return NULL;
     return _Class->GetPropertyFromName(_PropertyName);
 }
-
-Il2CppMethodPointer Resolver::GetInternalCall(std::string_view _Name)
-{
-    return ResolveInternalCall(_Name);
-}
