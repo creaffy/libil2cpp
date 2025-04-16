@@ -1,21 +1,8 @@
 #pragma once
 #include <cstdint>
+#include <type_traits>
+#include <string>
 #include <windows.h>
-
-namespace Il2Cpp {
-    typedef struct Assembly Assembly;
-    typedef struct Class Class;
-    typedef struct Domain Domain;
-    typedef struct Exception Exception;
-    typedef struct Field Field;
-    typedef struct Image Image;
-    typedef struct Method Method;
-    typedef struct Object Object;
-    typedef struct Property Property;
-    typedef struct String String;
-    typedef struct Thread Thread;
-    typedef struct Type Type;
-}
 
 typedef struct Il2CppClass Il2CppClass;
 typedef struct Il2CppType Il2CppType;
@@ -38,6 +25,36 @@ typedef struct Il2CppThread Il2CppThread;
 typedef struct Il2CppAsyncResult Il2CppAsyncResult;
 typedef struct Il2CppManagedMemorySnapshot Il2CppManagedMemorySnapshot;
 typedef struct Il2CppCustomAttrInfo Il2CppCustomAttrInfo;
+
+namespace Il2Cpp {
+    struct Class;
+    struct Object;
+    struct Method;
+    struct Property;
+    struct String;
+    struct Domain;
+    using Assembly = Il2CppAssembly;
+    using Image = Il2CppImage;
+    using Type = Il2CppType;
+    using Field = FieldInfo;
+
+    inline void* GetExport(std::string_view ExportArg) {
+        static HMODULE handle = GetModuleHandleA("GameAssembly.dll");
+        return GetProcAddress(handle, ExportArg.data());
+    }
+
+    namespace Traits {
+        template <class T>
+        concept Object = std::is_base_of<Il2CppObject, T>::value;
+
+        template <class T>
+        concept ValueType = not Object<T>;
+
+        template <class T>
+        using RealT = std::conditional_t<Object<T>, T*, T>;
+    }
+}
+
 typedef enum
 {
     IL2CPP_PROFILE_NONE = 0,
@@ -1262,13 +1279,13 @@ typedef union Il2CppRGCTXData
 } Il2CppRGCTXData;
 typedef struct MethodInfo
 {
-    Il2CppMethodPointer methodPointer;
-    Il2CppMethodPointer virtualMethodPointer;
+    void* methodPointer;
+    void* virtualMethodPointer;
     InvokerMethod invoker_method;
     const char* name;
     Il2Cpp::Class* klass;
     const Il2Cpp::Type* return_type;
-    const Il2Cpp::Type** parameters;
+    Il2Cpp::Type** parameters;
     union
     {
         const Il2CppRGCTXData* rgctx_data;
@@ -1311,10 +1328,10 @@ typedef struct Il2CppClass
     Il2CppMetadataTypeHandle typeMetadataHandle;
     const Il2CppInteropData* interopData;
     Il2Cpp::Class* klass;
-    Il2Cpp::Field* fields;
-    const EventInfo* events;
-    const Il2Cpp::Property* properties;
-    const Il2Cpp::Method** methods;
+    FieldInfo* fields;
+    EventInfo* events;
+    Il2Cpp::Property* properties;
+    Il2Cpp::Method** methods;
     Il2Cpp::Class** nestedTypes;
     Il2Cpp::Class** implementedInterfaces;
     Il2CppRuntimeInterfaceOffsetPair* interfaceOffsets;
@@ -1383,7 +1400,7 @@ typedef struct Il2CppClass_0 {
     Il2CppMetadataTypeHandle typeMetadataHandle;
     const Il2CppInteropData* interopData;
     Il2Cpp::Class* klass;
-    Il2Cpp::Field* fields;
+    FieldInfo* fields;
     const EventInfo* events;
     const Il2Cpp::Property* properties;
     const Il2Cpp::Method** methods;
@@ -1696,9 +1713,8 @@ typedef struct Il2CppArrayBounds
     il2cpp_array_size_t length;
     il2cpp_array_lower_bound_t lower_bound;
 } Il2CppArrayBounds;
-typedef struct Il2CppArray
+typedef struct Il2CppArray : Il2CppObject
 {
-    Il2CppObject obj;
     Il2CppArrayBounds* bounds;
     il2cpp_array_size_t max_length;
 } Il2CppArray;
@@ -1709,11 +1725,10 @@ typedef struct Il2CppArraySize
     il2cpp_array_size_t max_length;
     __declspec(align(8)) void* vector[32];
 } Il2CppArraySize;
-typedef struct Il2CppString
+typedef struct Il2CppString : Il2CppObject
 {
-    Il2CppObject object;
     int32_t length;
-    Il2CppChar chars[32];
+    Il2CppChar chars[1];
 } Il2CppString;
 typedef struct Il2CppReflectionType
 {
@@ -1757,7 +1772,7 @@ typedef struct Il2CppReflectionField
 {
     Il2CppObject object;
     Il2Cpp::Class* klass;
-    Il2Cpp::Field* field;
+    FieldInfo* field;
     Il2Cpp::String* name;
     Il2CppReflectionType* type;
     uint32_t attrs;
@@ -1773,7 +1788,7 @@ typedef struct Il2CppReflectionMethod
     Il2CppObject object;
     const Il2Cpp::Method* method;
     Il2Cpp::String* name;
-    Il2CppReflectionType* reftype;
+    Il2CppReflectionType* RealType;
 } Il2CppReflectionMethod;
 typedef struct Il2CppReflectionGenericMethod
 {
@@ -1982,7 +1997,7 @@ typedef struct Il2CppThread
     Il2CppObject obj;
     Il2CppInternalThread* internal_thread;
     Il2Cpp::Object* start_obj;
-    Il2Cpp::Exception* pending_exception;
+    Il2CppException* pending_exception;
     Il2Cpp::Object* principal;
     int32_t principal_version;
     Il2CppDelegate* delegate;
@@ -1995,7 +2010,7 @@ typedef struct Il2CppException
     Il2Cpp::String* className;
     Il2Cpp::String* message;
     Il2Cpp::Object* _data;
-    struct Il2Cpp::Exception* inner_ex;
+    struct Il2CppException* inner_ex;
     Il2Cpp::String* _helpURL;
     Il2CppArray* trace_ips;
     Il2Cpp::String* stack_trace;
@@ -2331,7 +2346,7 @@ typedef struct Il2CppAsyncCall
 typedef struct Il2CppExceptionWrapper Il2CppExceptionWrapper;
 typedef struct Il2CppExceptionWrapper
 {
-    Il2Cpp::Exception* ex;
+    Il2CppException* ex;
 } Il2CppExceptionWrapper;
 typedef struct Il2CppIOAsyncResult
 {
@@ -2347,7 +2362,7 @@ typedef struct Il2CppSocketAsyncResult
     Il2CppIOAsyncResult base;
     Il2Cpp::Object* socket;
     int32_t operation;
-    Il2Cpp::Exception* delayedException;
+    Il2CppException* delayedException;
     Il2Cpp::Object* endPoint;
     Il2CppArray* buffer;
     int32_t offset;
@@ -2440,6 +2455,3 @@ typedef struct Il2CppByReference
 {
     intptr_t value;
 } Il2CppByReference;
-
-#define FIELD_ATTRIBUTE_STATIC 0x0010
-#define FIELD_ATTRIBUTE_LITERAL 0x0040

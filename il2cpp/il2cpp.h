@@ -1,0 +1,12 @@
+#pragma once
+#include "lib/base.h"
+#include "lib/api/array.h"
+#include "lib/api/class.h"
+#include "lib/api/domain.h"
+#include "lib/api/method.h"
+#include "lib/api/object.h"
+#include "lib/api/property.h"
+#include "lib/api/string.h"
+#include "lib/resolvers.h"
+#include "system.h"
+#include "engine.h"
